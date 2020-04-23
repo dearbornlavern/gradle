@@ -17,12 +17,18 @@
 package org.gradle.instantexecution
 
 import groovy.transform.Canonical
+import org.gradle.integtests.fixtures.ToBeFixedForVfsRetention
 import org.gradle.test.fixtures.file.TestFile
+import org.gradle.util.TestPrecondition
 import org.junit.Test
 import spock.lang.Unroll
 
 class InstantExecutionScriptChangesIntegrationTest extends AbstractInstantExecutionIntegrationTest {
 
+    @ToBeFixedForVfsRetention(
+        because = "https://github.com/gradle/native-platform/issues/192",
+        failsOnlyIf = TestPrecondition.WINDOWS
+    )
     @Unroll
     @Test
     def "invalidates cache upon changes to #testLabel"() {

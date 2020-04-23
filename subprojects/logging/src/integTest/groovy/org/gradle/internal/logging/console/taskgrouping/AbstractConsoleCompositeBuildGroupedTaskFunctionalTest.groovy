@@ -17,7 +17,9 @@
 package org.gradle.internal.logging.console.taskgrouping
 
 import org.gradle.integtests.fixtures.ToBeFixedForInstantExecution
+import org.gradle.integtests.fixtures.ToBeFixedForVfsRetention
 import org.gradle.integtests.fixtures.console.AbstractConsoleGroupedTaskFunctionalTest
+import org.gradle.util.TestPrecondition
 
 abstract class AbstractConsoleCompositeBuildGroupedTaskFunctionalTest extends AbstractConsoleGroupedTaskFunctionalTest {
     private static final String PROJECT_A_NAME = 'projectA'
@@ -63,6 +65,10 @@ abstract class AbstractConsoleCompositeBuildGroupedTaskFunctionalTest extends Ab
         file("$PROJECT_B_NAME/src/main/java/MyClass.java") << javaSourceFile()
     }
 
+    @ToBeFixedForVfsRetention(
+        because = "https://github.com/gradle/native-platform/issues/192",
+        failsOnlyIf = TestPrecondition.WINDOWS
+    )
     @ToBeFixedForInstantExecution
     def "can group task output in composite build"() {
         when:

@@ -17,6 +17,7 @@
 package org.gradle.launcher.continuous
 
 import org.gradle.integtests.fixtures.AbstractContinuousIntegrationTest
+import org.gradle.integtests.fixtures.ToBeFixedForVfsRetention
 import org.gradle.util.Requires
 import org.gradle.util.TestPrecondition
 
@@ -188,6 +189,10 @@ class SimpleJavaContinuousIntegrationTest extends AbstractContinuousIntegrationT
         executedAndNotSkipped ":compileJava"
     }
 
+    @ToBeFixedForVfsRetention(
+        because = "https://github.com/gradle/native-platform/issues/192",
+        failsOnlyIf = TestPrecondition.WINDOWS
+    )
     def "dependencies as inputs from local filesystem"() {
         when:
         def somelib = file("lib/somelib.jar")
